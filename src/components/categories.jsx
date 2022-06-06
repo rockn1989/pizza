@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
 function Categories({ value, onClickCategory }) {
-  const [activeCategory, setActiveCategory] = useState(0);
   const categories = [
     "Все",
     "Мясные",
@@ -10,10 +9,6 @@ function Categories({ value, onClickCategory }) {
     "Острые",
     "Закрытые",
   ];
-
-  // const onClickCategory = (index) => {
-  //   setActiveCategory(index);
-  // };
 
   return (
     <div className="categories">

@@ -1,7 +1,16 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import axios from "axios";
-import { setCategoryId, setPageCount } from "../redux/slices/filterSlice";
+import qs from "qs";
+
+import {
+  setCategoryId,
+  setPageCount,
+  setFilters,
+} from "../redux/slices/filterSlice";
+
 import Categories from "../components/categories";
 import Sort from "../components/sort";
 import PizzaBlock from "../components/pizza-block";
@@ -9,9 +18,16 @@ import Skeleton from "../components/pizza-block/skeleton";
 import Pagination from "../components/pagination";
 import { SearchContext } from "../App";
 
+import { sortList } from "../components/sort";
+
 function Home() {
   //https://628ca39e3df57e983ed2f993.mockapi.io/items
+  const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isMounted = useRef(false);
+  const isSearch = useRef(false);
+
   const { categoryId, sort, currentPage } = useSelector(
     (state) => state.filter
   );
@@ -31,7 +47,7 @@ function Home() {
     dispatch(setPageCount(number));
   };
 
-  useEffect(() => {
+  const fetchPizzas = () => {
     setIsLoading(true);
     const sortBy = sortType.replace("-", "");
     const orderType = sortType.includes("-") ? "asc" : "desc";
@@ -48,7 +64,41 @@ function Home() {
       });
 
     window.scrollTo(0, 0);
-  }, [categoryId, sortType, searchValue, currentPage]);
+  };
+
+  useEffect(() => {
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        categoryId,
+        sortProperty: sort.sortProperty,
+        currentPage,
+      });
+
+      navigate(`/?${queryString}`);
+    }
+
+    isMounted.current = true;
+  }, [categoryId, sortType, currentPage]);
+
+  useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1));
+      const sort = sortList.find(
+        (obj) => obj.sortProperty === params.sortProperty
+      );
+
+      dispatch(setFilters({ ...params, sort }));
+      isSearch.current = true;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isSearch.current) {
+      fetchPizzas();
+    }
+
+    isSearch.current = false;
+  }, [categoryId, sortType, currentPage]);
 
   const skeletons = new Array(6)
     .fill("")
