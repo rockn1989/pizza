@@ -294,13 +294,14 @@ body {
   }
 
   &--empty {
-    margin: 0 auto;
+    margin: 60px auto;
     width: 560px;
     text-align: center;
 
     h2 {
-      font-size: 32px;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      font-size: 36px;
+      font-weight: 600;
     }
 
     p {

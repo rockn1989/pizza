@@ -60,6 +60,7 @@ function Home() {
       )
       .then((response) => {
         setPizzas(response.data);
+        console.log(response.data);
         setIsLoading(false);
       });
 
