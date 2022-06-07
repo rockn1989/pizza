@@ -51,6 +51,24 @@ body {
       }
     }
   }
+
+  &__error-info {
+    margin: 60px auto;
+    max-width: 520px;
+    text-align: center;
+
+    h2 {
+      margin-bottom: 15px;
+      font-size: 28px;
+      line-height: 34px;
+      font-weight: 700;
+    }
+
+    p {
+      font-size: 20px;
+      line-height: 26px;
+    }
+  }
 }
 
 .container {
