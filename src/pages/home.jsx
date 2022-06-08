@@ -10,14 +10,14 @@ import {
   setFilters,
 } from "../redux/slices/filterSlice";
 
-import { fetchPizzas } from "../redux/slices/pizzaSlice";
+import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzaSlice";
+import { selectFilter } from "../redux/slices/filterSlice";
 
 import Categories from "../components/categories";
 import Sort from "../components/sort";
 import PizzaBlock from "../components/pizza-block";
 import Skeleton from "../components/pizza-block/skeleton";
 import Pagination from "../components/pagination";
-import { SearchContext } from "../App";
 
 import { sortList } from "../components/sort";
 
@@ -29,15 +29,12 @@ function Home() {
   const isMounted = useRef(false);
   const isSearch = useRef(false);
 
-  const { categoryId, sort, currentPage } = useSelector(
-    (state) => state.filter
-  );
+  const { categoryId, sort, currentPage, searchValue } =
+    useSelector(selectFilter);
 
-  const { items, status } = useSelector((state) => state.pizza);
+  const { items, status } = useSelector(selectPizzaData);
 
   const sortType = sort.sortProperty;
-
-  const { searchValue } = useContext(SearchContext);
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
@@ -77,7 +74,7 @@ function Home() {
     }
 
     isMounted.current = true;
-  }, [categoryId, sortType, currentPage]);
+  }, [categoryId, sortType, currentPage, searchValue]);
 
   useEffect(() => {
     if (window.location.search) {
@@ -97,7 +94,7 @@ function Home() {
     }
 
     isSearch.current = false;
-  }, [categoryId, sortType, currentPage]);
+  }, [categoryId, sortType, currentPage, searchValue]);
 
   const skeletons = new Array(6)
     .fill("")
