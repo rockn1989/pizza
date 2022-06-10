@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import qs from "qs";
 
@@ -101,7 +101,9 @@ function Home() {
     .map((_, idx) => <Skeleton key={`${idx}_skeleton`} />);
 
   const pizzasArr = items.map((pizza, idx) => (
-    <PizzaBlock key={`${idx}_${pizza.title}`} {...pizza} />
+    <Link to={`/pizza/${pizza.id}`} key={`${idx}_${pizza.title}`}>
+      <PizzaBlock {...pizza} />
+    </Link>
   ));
 
   return (
