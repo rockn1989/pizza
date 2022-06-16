@@ -4,22 +4,21 @@ import styles from "./pagination.module.scss";
 
 type PaginationProps = {
   value: number,
-  onChangePage: any;
+  onChangePage: (page: number) => void;
 };
 
-const Pagination: React.FC<PaginationProps> = ({ value, onChangePage }) => {
-  return (
-    <ReactPaginate
-      className={styles.root}
-      breakLabel="..."
-      nextLabel=">"
-      previousLabel="<"
-      onPageChange={(event) => onChangePage(event.selected + 1)}
-      pageRangeDisplayed={4}
-      pageCount={3}
-      forcePage={value - 1}
-    />
-  );
-}
+const Pagination: React.FC<PaginationProps> = ({ value, onChangePage }) =>  (
+  <ReactPaginate
+    className={styles.root}
+    breakLabel="..."
+    nextLabel=">"
+    previousLabel="<"
+    onPageChange={(event) => onChangePage(event.selected + 1)}
+    pageRangeDisplayed={4}
+    pageCount={3}
+    forcePage={value - 1}
+  />
+);
+
 
 export default Pagination;

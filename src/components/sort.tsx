@@ -8,6 +8,10 @@ type SortItem = {
   sortProperty: string;
 };
 
+type PopupClick = MouseEvent & {
+  path: Node[]
+};
+
 export const sortList: SortItem[] = [
   { name: "популярности(DESC)", sortProperty: "rating" },
   { name: "популярности(ASC)", sortProperty: "-rating" },
@@ -29,8 +33,8 @@ const Sort: React.FC = () => {
     setOpen(false);
   };
 
-  const onToggleSort = (evt: any) => {
-    if (!evt.path.includes(sortRef.current)) {
+  const onToggleSort = (evt: MouseEvent) => {
+    if (sortRef.current && !evt.composedPath().includes(sortRef.current)) {
       setOpen(false);
     }
   };
