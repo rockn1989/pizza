@@ -21,7 +21,7 @@ import Pagination from "../components/pagination";
 
 import { sortList } from "../components/sort";
 
-function Home() {
+const Home: React.FC = () => {
   //https://628ca39e3df57e983ed2f993.mockapi.io/items
 
   const dispatch = useDispatch();
@@ -36,12 +36,12 @@ function Home() {
 
   const sortType = sort.sortProperty;
 
-  const onChangeCategory = (id) => {
+  const onChangeCategory = (id: number) => {
     dispatch(setCategoryId(id));
   };
 
-  const onChangePage = (number) => {
-    dispatch(setPageCount(number));
+  const onChangePage = (page: number) => {
+    dispatch(setPageCount(page));
   };
 
   const getPizzas = async () => {
@@ -50,6 +50,7 @@ function Home() {
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     const search = searchValue.length > 0 ? `&search=${searchValue}` : "";
     dispatch(
+      // @ts-ignore
       fetchPizzas({
         sortBy,
         orderType,
@@ -100,7 +101,7 @@ function Home() {
     .fill("")
     .map((_, idx) => <Skeleton key={`${idx}_skeleton`} />);
 
-  const pizzasArr = items.map((pizza, idx) => (
+  const pizzasArr = items.map((pizza: any, idx: number) => (
     <Link to={`/pizza/${pizza.id}`} key={`${idx}_${pizza.title}`}>
       <PizzaBlock {...pizza} />
     </Link>
@@ -111,7 +112,7 @@ function Home() {
       <div className="content__top">
         <Categories
           value={categoryId}
-          onClickCategory={(id) => onChangeCategory(id)}
+          onClickCategory={(id: number) => onChangeCategory(id)}
         />
         <Sort />
       </div>

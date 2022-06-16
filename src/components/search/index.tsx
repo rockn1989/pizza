@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 
 import { setSearchValue } from "../../redux/slices/filterSlice";
 
-function Search() {
+const Search: React.FC = () => {
   const dispatch = useDispatch();
   const [value, setValue] = useState("");
 
@@ -17,7 +17,7 @@ function Search() {
     []
   );
 
-  const onChangeInput = (evt) => {
+  const onChangeInput = (evt: any) => {
     setValue(evt.target.value);
     updateSearchValue(evt.target.value);
   };
