@@ -10,7 +10,7 @@ import {
   setFilters,
 } from "../redux/slices/filterSlice";
 
-import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzaSlice";
+import { fetchPizzas, SearchPizzaParams, selectPizzaData } from "../redux/slices/pizzaSlice";
 import { selectFilter } from "../redux/slices/filterSlice";
 
 import Categories from "../components/categories";
@@ -20,11 +20,12 @@ import Skeleton from "../components/pizza-block/skeleton";
 import Pagination from "../components/pagination";
 
 import { sortList } from "../components/sort";
+import { useAppDispatch } from "../redux/store";
 
 const Home: React.FC = () => {
   //https://628ca39e3df57e983ed2f993.mockapi.io/items
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isMounted = useRef(false);
   const isSearch = useRef(false);
@@ -50,13 +51,12 @@ const Home: React.FC = () => {
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     const search = searchValue.length > 0 ? `&search=${searchValue}` : "";
     dispatch(
-      // @ts-ignore
       fetchPizzas({
         sortBy,
         orderType,
         category,
         search,
-        currentPage,
+        currentPage: String(currentPage),
       })
     );
 
@@ -79,12 +79,21 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
+      const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzaParams;
       const sort = sortList.find(
-        (obj) => obj.sortProperty === params.sortProperty
+        (obj) => obj.sortProperty === params.sortBy
       );
 
-      dispatch(setFilters({ ...params, sort }));
+      // if (params) {
+      //   params.sortBy = sort;
+      // }
+
+      dispatch(setFilters({
+        searchValue: params.search,
+        categoryId: Number(params.category),
+        currentPage: Number(params.currentPage),
+        sort: sort || sortList[0],
+      }));
       isSearch.current = true;
     }
   }, []);
@@ -102,9 +111,7 @@ const Home: React.FC = () => {
     .map((_, idx) => <Skeleton key={`${idx}_skeleton`} />);
 
   const pizzasArr = items.map((pizza: any, idx: number) => (
-    <Link to={`/pizza/${pizza.id}`} key={`${idx}_${pizza.title}`}>
-      <PizzaBlock {...pizza} />
-    </Link>
+    <PizzaBlock {...pizza} />
   ));
 
   return (
