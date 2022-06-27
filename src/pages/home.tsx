@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useCallback, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import qs from "qs";
 
@@ -30,16 +30,15 @@ const Home: React.FC = () => {
   const isMounted = useRef(false);
   const isSearch = useRef(false);
 
-  const { categoryId, sort, currentPage, searchValue } =
-    useSelector(selectFilter);
+  const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
 
   const { items, status } = useSelector(selectPizzaData);
 
   const sortType = sort.sortProperty;
 
-  const onChangeCategory = (id: number) => {
+  const onChangeCategory = useCallback((id: number) => {
     dispatch(setCategoryId(id));
-  };
+  }, []);
 
   const onChangePage = (page: number) => {
     dispatch(setPageCount(page));
@@ -111,7 +110,7 @@ const Home: React.FC = () => {
     .map((_, idx) => <Skeleton key={`${idx}_skeleton`} />);
 
   const pizzasArr = items.map((pizza: any, idx: number) => (
-    <PizzaBlock {...pizza} />
+    <PizzaBlock {...pizza} key={pizza.id} />
   ));
 
   return (
@@ -119,9 +118,9 @@ const Home: React.FC = () => {
       <div className="content__top">
         <Categories
           value={categoryId}
-          onClickCategory={(id: number) => onChangeCategory(id)}
+          onClickCategory={onChangeCategory}
         />
-        <Sort />
+        <Sort value={sort} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === "error" ? (
