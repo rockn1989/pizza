@@ -4,15 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 import qs from "qs";
 
-import {
-  setCategoryId,
-  setPageCount,
-  setFilters,
-} from "../redux/slices/filterSlice";
-
-import { fetchPizzas, SearchPizzaParams, selectPizzaData } from "../redux/slices/pizzaSlice";
-import { selectFilter } from "../redux/slices/filterSlice";
-
 import Categories from "../components/categories";
 import Sort from "../components/sort";
 import PizzaBlock from "../components/pizza-block";
@@ -21,6 +12,11 @@ import Pagination from "../components/pagination";
 
 import { sortList } from "../components/sort";
 import { useAppDispatch } from "../redux/store";
+import { setCategoryId, setFilters, setPageCount } from "../redux/filter/slice";
+import { fetchPizzas } from "../redux/pizza/asyncActions";
+import { SearchPizzaParams } from "../redux/pizza/types";
+import { selectPizzaData } from "../redux/pizza/selectors";
+import { selectFilter } from "../redux/filter/selectors";
 
 const Home: React.FC = () => {
   //https://628ca39e3df57e983ed2f993.mockapi.io/items
@@ -82,10 +78,6 @@ const Home: React.FC = () => {
       const sort = sortList.find(
         (obj) => obj.sortProperty === params.sortBy
       );
-
-      // if (params) {
-      //   params.sortBy = sort;
-      // }
 
       dispatch(setFilters({
         searchValue: params.search,
