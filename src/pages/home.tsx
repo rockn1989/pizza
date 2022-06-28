@@ -4,11 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 import qs from "qs";
 
-import Categories from "../components/categories";
-import Sort from "../components/sort";
-import PizzaBlock from "../components/pizza-block";
-import Skeleton from "../components/pizza-block/skeleton";
-import Pagination from "../components/pagination";
+import {
+  Categories, 
+  SortPopup as Sort,
+  PizzaBlock,
+  Skeleton,
+  Pagination
+} from "../components";
 
 import { sortList } from "../components/sort";
 import { useAppDispatch } from "../redux/store";

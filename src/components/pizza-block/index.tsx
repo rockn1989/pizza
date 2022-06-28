@@ -16,7 +16,7 @@ type PizzaBlockProps = {
   sizes: number[];
 };
 
-const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, types, sizes }) => {
+export const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, types, sizes }) => {
   const dispatch = useDispatch();
   const cartItem = useSelector(selectCartItemById(id));
 
@@ -92,6 +92,4 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, typ
       </div>
     </div>
   );
-}
-
-export default PizzaBlock;
+};

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 const PizzaDetail: React.FC = () => {
   const { id } = useParams();
@@ -34,6 +34,12 @@ const PizzaDetail: React.FC = () => {
       <img src={pizza.imageUrl} alt="" />
       <h2>{pizza.title}</h2>
       <p>{pizza.price}</p>
+      <Link
+        to="/"
+        className="button button--outline button--add go-back-btn"
+      >
+        <span>Вернуться назад</span>
+      </Link>
     </div>
   );
 }

@@ -2,11 +2,11 @@ import React, { useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import Search from "./search";
+import { Search } from "../components";
 import logoSvg from "../assets/img/pizza-logo.svg";
 import { selectCart } from "../redux/cart/selectors";
 
-const Header: React.FC = () => {
+export const Header: React.FC = () => {
   const { items, totalPrice } = useSelector(selectCart);
   const location = useLocation();
   const isMounter = useRef(false);
@@ -35,9 +35,9 @@ const Header: React.FC = () => {
           </div>
         </Link>
         
-        {location.pathname != `/cart` && (<Search />)}
+        {location.pathname !== `/cart` && (<Search />)}
         <div className="header__cart">
-          {location.pathname != `/cart` && (
+          {location.pathname !== `/cart` && (
             <Link to="/cart" className="button button--cart">
               <span>{totalPrice} ₽</span>
               <div className="button__delimiter"></div>
@@ -77,6 +77,4 @@ const Header: React.FC = () => {
       </div>
     </div>
   );
-}
-
-export default Header;
+};
