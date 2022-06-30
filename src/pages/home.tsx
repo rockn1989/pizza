@@ -41,7 +41,7 @@ const Home: React.FC = () => {
   const onChangePage = (page: number) => {
     dispatch(setPageCount(page));
   };
-  console.log('home')
+
   const getPizzas = async () => {
     const sortBy = sortType.replace("-", "");
     const orderType = sortType.includes("-") ? "asc" : "desc";
@@ -59,11 +59,6 @@ const Home: React.FC = () => {
 
     window.scrollTo(0, 0);
   };
-
-  useEffect(() => {
-    console.log('123123')
-    getPizzas();
-  }, []);
 
   useEffect(() => {
     if (isMounted.current) {
@@ -98,9 +93,7 @@ const Home: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log('pre fetch')
     if (!isSearch.current) {
-      console.log('fetch')
       getPizzas();
     }
 
