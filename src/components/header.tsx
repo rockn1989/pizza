@@ -10,6 +10,7 @@ export const Header: React.FC = () => {
   const { items, totalPrice } = useSelector(selectCart);
   const location = useLocation();
   const isMounter = useRef(false);
+
   const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0);
   
   useEffect(() => {

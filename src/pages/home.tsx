@@ -31,7 +31,7 @@ const Home: React.FC = () => {
   const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
 
   const { items, status } = useSelector(selectPizzaData);
-
+  
   const sortType = sort.sortProperty;
 
   const onChangeCategory = useCallback((id: number) => {
@@ -41,7 +41,7 @@ const Home: React.FC = () => {
   const onChangePage = (page: number) => {
     dispatch(setPageCount(page));
   };
-
+  console.log('home')
   const getPizzas = async () => {
     const sortBy = sortType.replace("-", "");
     const orderType = sortType.includes("-") ? "asc" : "desc";
@@ -61,6 +61,11 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
+    console.log('123123')
+    getPizzas();
+  }, []);
+
+  useEffect(() => {
     if (isMounted.current) {
       const queryString = qs.stringify({
         categoryId,
@@ -75,6 +80,7 @@ const Home: React.FC = () => {
   }, [categoryId, sortType, currentPage, searchValue]);
 
   useEffect(() => {
+
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzaParams;
       const sort = sortList.find(
@@ -92,12 +98,16 @@ const Home: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    console.log('pre fetch')
     if (!isSearch.current) {
+      console.log('fetch')
       getPizzas();
     }
 
     isSearch.current = false;
   }, [categoryId, sortType, currentPage, searchValue]);
+
+
 
   const skeletons = new Array(6)
     .fill("")
