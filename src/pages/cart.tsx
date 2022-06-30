@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { CartItemBlock as CartItem } from "../components";
 import { CartEmpty } from "../components";
 import { selectCart } from "../redux/cart/selectors";
+import { clearItems } from '../redux/cart/slice';
 
 const Cart: React.FC = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,6 @@ const Cart: React.FC = () => {
 
   const onClickClear = () => {
     if (window.confirm("Очистить корзину?")) {
-      // @ts-ignore
       dispatch(clearItems());
     }
   };
