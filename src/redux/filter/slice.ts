@@ -4,7 +4,7 @@ import { FilterSliceState, Sort, SortPropertyEnum } from "./types";
 
 const initialState: FilterSliceState = {
   searchValue: "",
-  categoryId: 0,
+  category: 0,
   currentPage: 1,
   sort: {
     name: "популярности",
@@ -17,7 +17,7 @@ export const filterSlice = createSlice({
   initialState,
   reducers: {
     setCategoryId(state, action: PayloadAction<number>) {
-      state.categoryId = action.payload;
+      state.category = action.payload;
     },
     setSearchValue(state, action: PayloadAction<string>) {
       state.searchValue = action.payload;
@@ -30,7 +30,7 @@ export const filterSlice = createSlice({
     },
     setFilters(state, action: PayloadAction<FilterSliceState>) {
       state.currentPage = Number(action.payload.currentPage);
-      state.categoryId = Number(action.payload.categoryId);
+      state.category = Number(action.payload.category);
       state.sort = action.payload.sort;
     },
   },

@@ -15,7 +15,9 @@ const categories: string[] = [
 ];
 
 export const Categories: React.FC<CategoriesProps> = React.memo(({ value, onClickCategory }) => {
-  
+
+  const activeItem: number = value | 0;
+
   return (
     <div className="categories">
       <ul>
@@ -24,7 +26,7 @@ export const Categories: React.FC<CategoriesProps> = React.memo(({ value, onClic
             <li
               key={`${idx}_${categoryName}`}
               onClick={() => onClickCategory(idx)}
-              className={value === idx ? "active" : ""}
+              className={activeItem === idx ? "active" : ""}
             >
               {categoryName}
             </li>
