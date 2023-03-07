@@ -12,7 +12,7 @@ const PizzaDetail = React.lazy(() => import(/* webpackChunkName: "PizzaDetail" *
 const NotFound = React.lazy(() => import(/* webpackChunkName: "NotFound" */ './pages/not-found'));
 
 function App() {
-  console.log('test app')
+
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
