@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import qs from "qs";
 
 import {
-  Categories, 
+  Categories,
   SortPopup as Sort,
   PizzaBlock,
   Skeleton,
@@ -25,14 +25,13 @@ const Home: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const {categoryId} = useParams();
   const isMounted = useRef(false);
   const isSearch = useRef(false);
 
   const { category, sort, currentPage, searchValue } = useSelector(selectFilter);
 
   const { items, status } = useSelector(selectPizzaData);
-  
+
   const sortType = sort.sortProperty;
 
   const onChangeCategory = useCallback((id: number) => {
@@ -49,7 +48,7 @@ const Home: React.FC = () => {
     const orderType = sortType.includes("-") ? "asc" : "desc";
     const categoryId = category > 0 ? `&category=${String(category)}` : "";
     const search = searchValue;
-    
+
     dispatch(
       fetchPizzas({
         sortBy,
@@ -89,7 +88,7 @@ const Home: React.FC = () => {
         categoryId: category > 0 ? category : null,
         sortProperty: sort.sortProperty,
         currentPage,
-      }, {skipNulls: true});
+      }, { skipNulls: true });
 
       navigate(`/?${queryString}`);
     }
